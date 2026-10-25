@@ -1,6 +1,6 @@
 # Modern APEX Skin
 
-A clean, modern stylesheet for the **Oracle APEX Universal Theme**: indigo brand color, Inter font, soft shadows, rounded regions, a frosted header, pill-style navigation, refined Interactive Reports and Grids, dark mode, and a set of utility classes.
+A clean, modern stylesheet for the **Oracle APEX Universal Theme**: keeps Vita's native blue, Inter font, soft shadows, rounded regions, a frosted header, pill-style navigation, refined Interactive Reports and Grids, dark mode, and a set of utility classes.
 
 It is layered **on top of** the Universal Theme. Nothing in the theme itself is modified, so APEX upgrades remain safe.
 
@@ -58,11 +58,15 @@ Upload a minified copy named `modern-apex.min.css`. When the application isn't i
 
 All colors, radii, shadows and fonts are defined as tokens in the `:root` block at the top of the file. Changing the brand usually means editing only these lines:
 
+By default the brand color is **inherited from the Universal Theme's Vita blue** (`--ut-palette-primary`). Hover shades, highlight tints and focus rings are derived from it automatically, so any primary color you set in Theme Roller flows through the whole skin.
+
+To force a different brand color, replace the `var(...)` with a hex value:
+
 ```css
 :root {
-  --brand-500: #4f46e5;   /* primary */
-  --brand-600: #4338ca;   /* primary hover */
-  --brand-50:  #eef2ff;   /* light tint for highlights */
+  --brand-500: var(--ut-palette-primary, #0572ce);   /* primary: Vita blue by default */
+  --brand-600: color-mix(in srgb, var(--brand-500) 85%, #000);        /* hover (derived) */
+  --brand-50:  color-mix(in srgb, var(--brand-500) 10%, transparent); /* tint (derived) */
   --accent-500: #0ea5e9;
 
   --radius:    10px;      /* general corner radius */
@@ -72,7 +76,7 @@ All colors, radii, shadows and fonts are defined as tokens in the `:root` block 
 }
 ```
 
-The tokens are mapped onto the Universal Theme's own variables (`--ut-palette-primary`, `--ut-component-border-radius`, and so on), so built-in components pick up the brand automatically.
+Surface, radius and background tokens are mapped onto the Universal Theme's own variables (`--ut-component-border-radius`, `--ut-body-background-color`, and so on). The primary palette is deliberately left untouched, so Vita's blue stays in control.
 
 > **Note:** Universal Theme variable names vary slightly between APEX versions. To check which ones your version uses, inspect `:root` in your browser devtools. The class-based rules in the file keep the look consistent either way.
 

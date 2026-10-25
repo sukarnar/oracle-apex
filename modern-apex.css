@@ -12,10 +12,11 @@
 
 /* ---------- 2. Design tokens ------------------------------------------- */
 :root {
-  /* Brand */
-  --brand-500: #4f46e5;          /* primary (indigo) */
-  --brand-600: #4338ca;          /* hover */
-  --brand-50:  #eef2ff;          /* tints */
+  /* Brand — inherits the Universal Theme (Vita) primary blue.
+     Fallback #0572ce is Vita's blue if the UT variable is unavailable. */
+  --brand-500: var(--ut-palette-primary, #0572ce);                    /* primary */
+  --brand-600: color-mix(in srgb, var(--brand-500) 85%, #000);        /* hover */
+  --brand-50:  color-mix(in srgb, var(--brand-500) 10%, transparent); /* tints */
   --accent-500: #0ea5e9;
 
   /* Neutrals */
@@ -49,16 +50,14 @@
   --shadow-sm: 0 1px 2px rgba(15, 23, 42, .06);
   --shadow:    0 1px 3px rgba(15, 23, 42, .08), 0 4px 12px rgba(15, 23, 42, .04);
   --shadow-lg: 0 10px 30px rgba(15, 23, 42, .12);
-  --ring:      0 0 0 3px rgba(79, 70, 229, .25);
+  --ring:      0 0 0 3px color-mix(in srgb, var(--brand-500) 25%, transparent);
 
   --font: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   --ease: 160ms cubic-bezier(.2, .8, .2, 1);
 
   /* Map onto Universal Theme variables (names vary slightly by APEX
      version — verify in Theme Roller > "Custom CSS" / browser devtools) */
-  --ut-palette-primary: var(--brand-500);
-  --ut-palette-primary-contrast: #fff;
-  --ut-palette-primary-shade: var(--brand-50);
+  /* Primary palette is NOT overridden: Vita's blue is kept as-is. */
   --ut-body-background-color: var(--app-bg);
   --ut-body-text-color: var(--text);
   --ut-component-border-radius: var(--radius);
@@ -79,7 +78,7 @@ body.theme-dark,
   --border:        #1f2a3c;
   --text:          #e5e7eb;
   --text-muted:    #94a3b8;
-  --brand-50:      rgba(99, 102, 241, .15);
+  --brand-50:      color-mix(in srgb, var(--brand-500) 18%, transparent);
   --shadow:        0 1px 3px rgba(0, 0, 0, .4);
 }
 
