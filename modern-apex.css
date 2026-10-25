@@ -1,0 +1,348 @@
+/* =====================================================================
+   modern-apex.css — a clean, modern skin for Oracle APEX Universal Theme
+   ---------------------------------------------------------------------
+   Load AFTER the Universal Theme CSS (via Theme Style "File URLs" or
+   User Interface > CSS File URLs). Tested approach: override UT custom
+   properties first, then refine key component classes.
+   Change the brand by editing the tokens in :root only.
+   ===================================================================== */
+
+/* ---------- 1. Fonts (self-host Inter in Static Files if CDNs are blocked) */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+
+/* ---------- 2. Design tokens ------------------------------------------- */
+:root {
+  /* Brand */
+  --brand-500: #4f46e5;          /* primary (indigo) */
+  --brand-600: #4338ca;          /* hover */
+  --brand-50:  #eef2ff;          /* tints */
+  --accent-500: #0ea5e9;
+
+  /* Neutrals */
+  --gray-0:   #ffffff;
+  --gray-50:  #f8fafc;
+  --gray-100: #f1f5f9;
+  --gray-200: #e2e8f0;
+  --gray-300: #cbd5e1;
+  --gray-500: #64748b;
+  --gray-700: #334155;
+  --gray-900: #0f172a;
+
+  /* Status */
+  --success: #16a34a;
+  --warning: #d97706;
+  --danger:  #dc2626;
+  --info:    #0284c7;
+
+  /* Surfaces & text */
+  --app-bg:        var(--gray-50);
+  --surface:       var(--gray-0);
+  --surface-muted: var(--gray-100);
+  --border:        var(--gray-200);
+  --text:          var(--gray-900);
+  --text-muted:    var(--gray-500);
+
+  /* Shape & depth */
+  --radius-sm: 6px;
+  --radius:    10px;
+  --radius-lg: 14px;
+  --shadow-sm: 0 1px 2px rgba(15, 23, 42, .06);
+  --shadow:    0 1px 3px rgba(15, 23, 42, .08), 0 4px 12px rgba(15, 23, 42, .04);
+  --shadow-lg: 0 10px 30px rgba(15, 23, 42, .12);
+  --ring:      0 0 0 3px rgba(79, 70, 229, .25);
+
+  --font: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --ease: 160ms cubic-bezier(.2, .8, .2, 1);
+
+  /* Map onto Universal Theme variables (names vary slightly by APEX
+     version — verify in Theme Roller > "Custom CSS" / browser devtools) */
+  --ut-palette-primary: var(--brand-500);
+  --ut-palette-primary-contrast: #fff;
+  --ut-palette-primary-shade: var(--brand-50);
+  --ut-body-background-color: var(--app-bg);
+  --ut-body-text-color: var(--text);
+  --ut-component-border-radius: var(--radius);
+  --ut-region-background-color: var(--surface);
+  --ut-region-border-color: var(--border);
+  --ut-header-background-color: var(--surface);
+  --ut-header-text-color: var(--text);
+  --ut-nav-background-color: var(--surface);
+  --a-button-border-radius: var(--radius-sm);
+}
+
+/* ---------- 3. Dark mode (add class "theme-dark" to <body>, or rely on OS) */
+body.theme-dark,
+:root.theme-dark {
+  --app-bg:        #0b1120;
+  --surface:       #111827;
+  --surface-muted: #1f2937;
+  --border:        #1f2a3c;
+  --text:          #e5e7eb;
+  --text-muted:    #94a3b8;
+  --brand-50:      rgba(99, 102, 241, .15);
+  --shadow:        0 1px 3px rgba(0, 0, 0, .4);
+}
+
+/* ---------- 4. Base ----------------------------------------------------- */
+body,
+.t-Body,
+.t-Body-main,
+.t-Body-content {
+  font-family: var(--font);
+  background: var(--app-bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, .t-Region-title, .t-HeroRegion-title {
+  font-family: var(--font);
+  letter-spacing: -.01em;
+  color: var(--text);
+}
+
+a { color: var(--brand-500); transition: color var(--ease); }
+a:hover { color: var(--brand-600); }
+
+/* ---------- 5. Header & navigation ------------------------------------- */
+.t-Header {
+  background: color-mix(in srgb, var(--surface) 85%, transparent);
+  backdrop-filter: saturate(180%) blur(10px);
+  border-bottom: 1px solid var(--border);
+  box-shadow: none;
+}
+.t-Header-logo-link,
+.t-Header-logo { color: var(--text); font-weight: 700; }
+
+.t-NavigationBar-item .t-Button { color: var(--text-muted); }
+
+/* Side navigation (tree) */
+.t-Body-nav,
+.t-TreeNav {
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+}
+.t-TreeNav .a-TreeView-node--topLevel > .a-TreeView-content {
+  margin: 2px 8px;
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+  transition: background var(--ease), color var(--ease);
+}
+.t-TreeNav .a-TreeView-node--topLevel > .a-TreeView-content:hover {
+  background: var(--surface-muted);
+  color: var(--text);
+}
+.t-TreeNav .a-TreeView-node--topLevel > .a-TreeView-content.is-current,
+.t-TreeNav .a-TreeView-node--topLevel > .a-TreeView-content.is-current--top {
+  background: var(--brand-50);
+  color: var(--brand-500);
+  font-weight: 600;
+}
+.t-TreeNav .a-TreeView-content .fa { color: inherit; }
+
+/* ---------- 6. Regions / cards ----------------------------------------- */
+.t-Region,
+.t-Card .t-Card-wrap,
+.a-CardView {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+.t-Region-header {
+  background: transparent;
+  border-bottom: 1px solid var(--border);
+  padding: 14px 18px;
+}
+.t-Region-title { font-size: 1rem; font-weight: 600; }
+.t-Region-body { padding: 18px; }
+
+.t-Card .t-Card-wrap,
+.a-CardView {
+  transition: transform var(--ease), box-shadow var(--ease);
+}
+.t-Card .t-Card-wrap:hover,
+.a-CardView:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Hero / page title region */
+.t-HeroRegion {
+  background: linear-gradient(135deg, var(--brand-50), transparent 70%);
+  border-radius: var(--radius-lg);
+}
+
+/* ---------- 7. Buttons -------------------------------------------------- */
+.t-Button {
+  font-family: var(--font);
+  font-weight: 500;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: var(--shadow-sm);
+  transition: background var(--ease), border-color var(--ease),
+              box-shadow var(--ease), transform var(--ease);
+}
+.t-Button:hover { background: var(--surface-muted); }
+.t-Button:active { transform: translateY(1px); }
+.t-Button:focus-visible { outline: none; box-shadow: var(--ring); }
+
+.t-Button--hot {
+  background: var(--brand-500);
+  border-color: var(--brand-500);
+  color: #fff;
+}
+.t-Button--hot:hover { background: var(--brand-600); border-color: var(--brand-600); }
+
+.t-Button--danger  { background: var(--danger);  border-color: var(--danger);  color: #fff; }
+.t-Button--success { background: var(--success); border-color: var(--success); color: #fff; }
+.t-Button--noUI    { box-shadow: none; border-color: transparent; background: transparent; }
+
+/* ---------- 8. Form fields --------------------------------------------- */
+.apex-item-text,
+.apex-item-textarea,
+.apex-item-select,
+.apex-item-datepicker,
+.apex-item-number,
+.t-Form-field,
+.a-Combobox,
+.a-PopupLOV {
+  font-family: var(--font);
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--gray-300);
+  border-radius: var(--radius-sm);
+  transition: border-color var(--ease), box-shadow var(--ease);
+}
+.apex-item-text:focus,
+.apex-item-textarea:focus,
+.apex-item-select:focus,
+.apex-item-number:focus,
+.t-Form-field:focus {
+  border-color: var(--brand-500);
+  box-shadow: var(--ring);
+  outline: none;
+}
+.t-Form-label { font-weight: 500; color: var(--text-muted); font-size: .8125rem; }
+
+/* Floating labels look cleaner with a softer container */
+.t-Form-fieldContainer--floatingLabel .t-Form-inputContainer {
+  border-radius: var(--radius-sm);
+}
+
+.t-Form-error,
+.a-Form-error { color: var(--danger); font-size: .8125rem; }
+
+/* ---------- 9. Reports, Interactive Report & Interactive Grid ---------- */
+.t-Report-report,
+.a-IRR-table,
+.a-GV-table {
+  font-family: var(--font);
+  border-collapse: separate;
+  border-spacing: 0;
+}
+.t-Report-report th,
+.a-IRR-header,
+.a-GV-header {
+  background: var(--surface-muted);
+  color: var(--text-muted);
+  font-size: .75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  border-bottom: 1px solid var(--border);
+}
+.t-Report-report td,
+.a-IRR-table td,
+.a-GV-cell {
+  border-color: var(--border);
+  color: var(--text);
+}
+.t-Report-report tr:hover td,
+.a-IRR-table tr:hover td,
+.a-GV-row:hover .a-GV-cell {
+  background: var(--brand-50);
+}
+.a-IRR-toolbar,
+.a-IG-toolbar,
+.a-Toolbar {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+.a-IRR,
+.a-IG {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+/* ---------- 10. Alerts & badges ---------------------------------------- */
+.t-Alert {
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+}
+.t-Alert--success { border-left: 4px solid var(--success); }
+.t-Alert--warning { border-left: 4px solid var(--warning); }
+.t-Alert--danger  { border-left: 4px solid var(--danger); }
+.t-Alert--info    { border-left: 4px solid var(--info); }
+
+.t-Badge,
+.u-badge {
+  border-radius: 999px;
+  padding: 2px 10px;
+  font-weight: 600;
+  font-size: .75rem;
+  background: var(--brand-50);
+  color: var(--brand-500);
+}
+
+/* ---------- 11. Dialogs ------------------------------------------------- */
+.ui-dialog,
+.t-Dialog-page {
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+}
+.ui-dialog .ui-dialog-titlebar {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  font-weight: 600;
+}
+.ui-widget-overlay {
+  background: rgba(15, 23, 42, .45);
+  backdrop-filter: blur(2px);
+}
+
+/* ---------- 12. Login page --------------------------------------------- */
+.t-PageBody--login {
+  background:
+    radial-gradient(circle at 20% 20%, var(--brand-50), transparent 40%),
+    radial-gradient(circle at 80% 80%, rgba(14, 165, 233, .12), transparent 40%),
+    var(--app-bg);
+}
+.t-Login-region {
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--border);
+}
+
+/* ---------- 13. Utility classes (use in "CSS Classes" attributes) ------ */
+.m-glass {
+  background: color-mix(in srgb, var(--surface) 70%, transparent) !important;
+  backdrop-filter: blur(12px);
+}
+.m-stat .t-Region-body { font-size: 2rem; font-weight: 700; letter-spacing: -.02em; }
+.m-stat .t-Region-title { color: var(--text-muted); font-weight: 500; }
+.m-flat { box-shadow: none !important; }
+.m-accent-top { border-top: 3px solid var(--brand-500) !important; }
+
+/* ---------- 14. Scrollbars & reduced motion ---------------------------- */
+* { scrollbar-width: thin; scrollbar-color: var(--gray-300) transparent; }
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+}
