@@ -243,17 +243,8 @@ a:hover { color: var(--brand-600); }
   border-collapse: separate;
   border-spacing: 0;
 }
-.t-Report-report th,
-.a-IRR-header,
-.a-GV-header {
-  background: var(--surface-muted);
-  color: var(--text-muted);
-  font-size: .75rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: .04em;
-  border-bottom: 1px solid var(--border);
-}
+/* Column headers: intentionally NOT overridden — keep Vita's native
+   header style (case, size, weight, colors). */
 .t-Report-report td,
 .a-IRR-table td,
 .a-GV-cell {

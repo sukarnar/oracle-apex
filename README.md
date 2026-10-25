@@ -152,7 +152,7 @@ Example: a dashboard KPI tile → Static Content region with CSS Classes `m-stat
 - **Regions & cards:** rounded surfaces, subtle borders, hover lift on cards
 - **Buttons:** default, `--hot`, `--danger`, `--success`, `--noUI`, focus ring
 - **Form fields:** text, textarea, select, date picker, combobox, popup LOV, error text
-- **Reports:** Classic Report, Interactive Report, Interactive Grid (headers, hover rows, toolbars)
+- **Reports:** Classic Report, Interactive Report, Interactive Grid (hover rows, toolbars, rounded containers; column headers keep the native Vita style)
 - **Alerts & badges:** colored left edge by status, pill badges
 - **Dialogs:** rounded modal, blurred overlay
 - **Login page:** soft gradient background, elevated login card
