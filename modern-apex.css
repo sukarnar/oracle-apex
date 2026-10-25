@@ -52,6 +52,10 @@
   --shadow-lg: 0 10px 30px rgba(15, 23, 42, .12);
   --ring:      0 0 0 3px color-mix(in srgb, var(--brand-500) 25%, transparent);
 
+  /* Region spacing */
+  --region-pad: 20px;   /* inside the region border */
+  --region-gap: 20px;   /* between regions */
+
   --font: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   --ease: 160ms cubic-bezier(.2, .8, .2, 1);
 
@@ -151,10 +155,23 @@ a:hover { color: var(--brand-600); }
 .t-Region-header {
   background: transparent;
   border-bottom: 1px solid var(--border);
-  padding: 14px 18px;
+  padding: 14px var(--region-pad);
 }
 .t-Region-title { font-size: 1rem; font-weight: 600; }
-.t-Region-body { padding: 18px; }
+
+/* Inner padding between the region border and its content.
+   Applied to every region, including those using the
+   "No Body Padding" template option (common on reports/IR/IG). */
+.t-Region .t-Region-body,
+.t-Region.t-Region--noPadding .t-Region-body {
+  padding: var(--region-pad);
+}
+
+/* Spacing between stacked regions */
+.t-Region { margin-bottom: var(--region-gap); }
+
+/* Opt-out: add "m-no-pad" to a region's CSS Classes for edge-to-edge content */
+.t-Region.m-no-pad .t-Region-body { padding: 0; }
 
 .t-Card .t-Card-wrap,
 .a-CardView {

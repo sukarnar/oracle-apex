@@ -144,6 +144,16 @@ Add these in a region's **Appearance → CSS Classes** attribute:
 | `m-glass` | Frosted, semi-transparent panel |
 | `m-accent-top` | Brand-colored top border |
 | `m-flat` | Removes the region shadow |
+| `m-no-pad` | Removes the inner region padding (edge-to-edge content) |
+
+### Region padding
+
+Every region gets inner padding between its border and its content, including regions set to the "No Body Padding" template option. Tune the spacing with two tokens in `:root`:
+
+```css
+--region-pad: 20px;   /* inside the region border */
+--region-gap: 20px;   /* between stacked regions */
+```
 
 Example: a dashboard KPI tile → Static Content region with CSS Classes `m-stat m-accent-top`.
 
